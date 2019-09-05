@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" packages="com.mojang.util">
+
+    <Appenders>
+        <TerminalConsole name="TerminalConsole">
+            <PatternLayout pattern="%highlightError{[%level]: %minecraftFormatting{%msg}%n%xEx}" />
+        </TerminalConsole>
+    </Appenders>
+
+    <Loggers>
+
+        <Root level="info">
+            <Filters>
+                <MarkerFilter marker="NETWORK_PACKETS" onMatch="DENY" onMismatch="NEUTRAL" />
+
+                <RegexFilter regex="\[[^]]+\] Loading.*" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <RegexFilter regex="Failed to save operators list:.*\n.*\(Read-only file system\).*" onMatch="DENY" onMismatch="NEUTRAL"/>
+            </Filters>
+
+            <AppenderRef ref="TerminalConsole" level="info"/>
+        </Root>
+
+        <Logger name="STDOUT" level="INFO" additivity="false">
+            <AppenderRef ref="TerminalConsole"/>
+        </Logger>
+        <Logger name="STDERR" level="ERROR" additivity="false">
+            <AppenderRef ref="TerminalConsole"/>
+        </Logger>
+
+    </Loggers>
+
+</Configuration>

@@ -1,0 +1,21 @@
+#!/bin/sh
+
+set -- \
+    --port ${MC_PORT:-25565} \
+    --universe /minecraft/worlds \
+    --paper-settings /minecraft/config/paper.yml \
+    --spigot-settings /minecraft/config/spigot.yml \
+    --bukkit-settings /minecraft/config/bukkit.yml \
+    --config /minecraft/config/server.properties \
+    "$@"
+
+set -- \
+    -Dlog4j.configurationFile=/minecraft/log4j2.xml \
+    -jar /usr/libexec/paper.jar \
+    "$@"
+
+if tty >/dev/null 2>&1; then
+   exec java "$@"
+else
+   unbuffer java "$@" | perl -nle 'BEGIN{$|=1} s/>....\r//; print'
+fi
