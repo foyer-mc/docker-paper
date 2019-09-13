@@ -11,6 +11,7 @@ set -- \
 
 set -- \
     -Dlog4j.configurationFile=/minecraft/log4j2.xml \
+    ${JAVA_FLAGS} \
     -jar /usr/libexec/paper.jar \
     "$@"
 
